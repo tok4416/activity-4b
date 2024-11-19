@@ -26,7 +26,7 @@ class AddClassesGPATest extends AbstractWebTest {
 
   @Test
   @Order(2)
-  @DisplayName("Second, click on the GPA Calculator button and validate navigation.")
+  @DisplayName("Second, add dem classes.")
   void addClasses() {
     GPAPage.clickAdd();
     GPAPage.clickAdd();
