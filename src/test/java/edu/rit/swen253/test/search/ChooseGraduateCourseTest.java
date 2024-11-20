@@ -3,15 +3,15 @@ package edu.rit.swen253.test.search;
 import edu.rit.swen253.page.search.ClassSearchPage;
 import edu.rit.swen253.page.tiger.TigerCenterHomePage;
 import edu.rit.swen253.test.AbstractWebTest;
-
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class ChooseUndergraduateCourseTest extends AbstractWebTest {
+class ChooseGraduateCourseTest extends AbstractWebTest {
 
   private TigerCenterHomePage homePage;
   private ClassSearchPage searchPage;
@@ -43,7 +43,7 @@ class ChooseUndergraduateCourseTest extends AbstractWebTest {
   @Test
   @Order(4)
   public void selectCourseLevel() {
-    searchPage.selectAdvancedSearchLevel("Undergraduate");
+    searchPage.selectAdvancedSearchLevel("Graduate");
     searchPage.closeAdvancedSearchDialog();
   }
 
@@ -59,7 +59,7 @@ class ChooseUndergraduateCourseTest extends AbstractWebTest {
   public void verifyCourseLevels() {
     List<Integer> courseLevels = searchPage.findResultCourseLevels();
     for (Integer courseLevel : courseLevels) {
-      assertTrue(courseLevel < 600); // undergraduate courses have a level # below 600
+      assertTrue(courseLevel >= 600); // graduate courses have a level # of 600 or higher
     }
-  }
+  } 
 }
