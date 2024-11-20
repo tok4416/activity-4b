@@ -18,6 +18,7 @@ public class AdvancedSearchView {
     private DomElement optionsContainerRoot;
 
     private static final By OPTION_DIVS_FINDER = By.className("advancedSearchNoPaddingLeftRight");
+    private static final By CLOSE_BUTTON_FINDER = By.className("advancedSearchDoneButton");
 
     /**
      * Construct a new AdvancedSearchView & inject the container of the advanced search dialog into the class
@@ -73,6 +74,15 @@ public class AdvancedSearchView {
             }
         }
         fail("Could not find college option containing text '" + subject + "'");
+    }
+
+    /**
+     * This method closes the advanced search view
+     */
+    @SuppressWarnings("static-access")
+    public void close() {
+        DomElement closeButton = advancedSearchContainer.findBy(CLOSE_BUTTON_FINDER);
+        closeButton.click();
     }
 
 }

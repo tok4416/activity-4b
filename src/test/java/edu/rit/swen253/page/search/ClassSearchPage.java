@@ -9,19 +9,20 @@ import org.openqa.selenium.TimeoutException;
 
 import edu.rit.swen253.page.AbstractPage;
 import edu.rit.swen253.utils.DomElement;
-import edu.rit.swen253.utils.TimingUtils;
 
 public class ClassSearchPage extends AbstractPage {
     
     // finders to extract various elements from the page
-    private static final By SEARCHBAR_FINDER = By.className("completer-input"); // the searchbar is the only element on the page with this classname
+    private static final By SEARCHBAR_FINDER = By.className("completer-input"); 
     private static final By TERM_DROPDOWN_FINDER = By.name("termSelector");
-    private static final By SUBMIT_SEARCH_BUTTON_FINDER = By.className("classSearchSearchButton"); // the search submission button is the only element with this class
-    private static final By ADVANCED_SEARCH_BUTTON_FINDER = By.className("classSearchAdvancedSearchText"); // the 'advanced search' link is the only element on the page with this classname
+    private static final By SUBMIT_SEARCH_BUTTON_FINDER = By.className("classSearchSearchButton"); 
+    private static final By ADVANCED_SEARCH_BUTTON_FINDER = By.className("classSearchAdvancedSearchText"); 
     private static final By ADVANCED_SEARCH_DIALOG_FINDER = By.className("mat-dialog-container");
+    private static final By SEARCH_RESULTS_CONTAINER_FINDER = By.className("classSearchBasicResultsMargin");
 
     private DomElement searchbar;
     private AdvancedSearchView advancedSearchDialog;
+    private SearchResultsView searchResultsView;
 
     public ClassSearchPage() {
         super();
@@ -94,6 +95,13 @@ public class ClassSearchPage extends AbstractPage {
     }
 
     /**
+     * This method closes the advanced search dialog
+     */
+    public void closeAdvancedSearchDialog() {
+        advancedSearchDialog.close();
+    }
+
+    /**
      * This method enters the provided search term text into the searchbar, but does not submit the search terms
      * 
      * @param searchTerm The text that is entered in the searchbar
@@ -112,6 +120,22 @@ public class ClassSearchPage extends AbstractPage {
             submitSearchButton.click();
         } catch (TimeoutException e) {
             fail("Could not find search submission button");
+        }
+    }
+
+    /**
+     * This method finds the text of all elements that appeared as search results after submitting a search
+     * 
+     * @return A list of strings, each containing the text in the "Name" column of search results
+     */
+    public List<String> findResultCourseDescriptions() {
+        try {
+            DomElement resultsContainer = findOnPage(SEARCH_RESULTS_CONTAINER_FINDER);
+            searchResultsView = new SearchResultsView(resultsContainer);
+            return searchResultsView.getSearchResultsClassText();
+        } catch (TimeoutException e) {
+            fail("Could not find search results container");
+            return null;
         }
     }
 }
