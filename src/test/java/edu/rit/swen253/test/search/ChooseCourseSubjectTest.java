@@ -12,7 +12,6 @@ import java.util.List;
 import edu.rit.swen253.page.search.ClassSearchPage;
 import edu.rit.swen253.page.tiger.TigerCenterHomePage;
 import edu.rit.swen253.test.AbstractWebTest;
-import edu.rit.swen253.utils.TimingUtils;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ChooseCourseSubjectTest extends AbstractWebTest {

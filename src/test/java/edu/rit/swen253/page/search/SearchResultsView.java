@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -58,6 +60,30 @@ public class SearchResultsView {
         }
 
         return resultsClassText;
+    }
+
+    /**
+     * This method returns the course levels of the courses in the search results
+     * 
+     * @return A list of integers, each representing a course level of a search result
+     */
+    public List<Integer> getResultCourseLevels() {
+        List<Integer> courseResultLevels = new LinkedList<>();
+        List<String> courseTexts = getSearchResultsClassText();
+        Pattern courseCodeFinder = Pattern.compile("SWEN \\d{2,3}"); // course level values are of the form "SWEN ###" (SWEN 99 has 2 numbers, hence \\d{2,3})
+        for (String courseText : courseTexts) {
+            Matcher levelMatcher = courseCodeFinder.matcher(courseText);
+            levelMatcher.find();
+            int startIndex = levelMatcher.start();
+            int endIndex = levelMatcher.end();
+            if (startIndex == -1) {
+                fail("Could not extract course level from course element text");
+                return courseResultLevels;
+            }
+            Integer courseLevel = Integer.parseInt(courseText.substring(startIndex + 5, endIndex)); // skipping over the 'SWEN ' part of the text
+            courseResultLevels.add(courseLevel);
+        }
+        return courseResultLevels;
     }
 
 }

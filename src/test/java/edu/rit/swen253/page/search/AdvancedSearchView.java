@@ -77,6 +77,28 @@ public class AdvancedSearchView {
     }
 
     /**
+     * This method selects an option from the dropdown "Grade", which will be graduate or undergraduate
+     * 
+     * @param level The selected course level from the dropdown
+     */
+    public void selectLevel(String level) {
+        // the targeted dropdown seems to be the 3rd to last div
+        List<DomElement> optionsDivs = optionsContainerRoot.findChildrenBy(OPTION_DIVS_FINDER);
+        DomElement levelDiv = optionsDivs.get(optionsDivs.size() - 3).findChildBy(By.className("styledSelect"));
+        DomElement dropdown = levelDiv.findChildBy(By.className("styledSelectWidthFix"));
+        dropdown.click(); // opening the dropdown to make its options clickable
+
+        List<DomElement> options = dropdown.findChildrenBy(By.cssSelector("*")); // getting all options in the dropdown
+        for (DomElement option : options) { // finding the option that matches the provided subject & immediately breaking
+            if (option.getText().contains(level)) {
+                option.click();
+                return; 
+            }
+        }
+        fail("Could not find level option containing text '" + level + "'");
+    }
+
+    /**
      * This method closes the advanced search view
      */
     @SuppressWarnings("static-access")

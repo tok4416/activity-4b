@@ -95,6 +95,15 @@ public class ClassSearchPage extends AbstractPage {
     }
 
     /**
+     * This method selects an option from the dropdown "Grade", which will be graduate or undergraduate
+     * 
+     * @param level The selected course level from the dropdown
+     */
+    public void selectAdvancedSearchLevel(String level)  {
+        advancedSearchDialog.selectLevel(level);
+    }
+
+    /**
      * This method closes the advanced search dialog
      */
     public void closeAdvancedSearchDialog() {
@@ -133,6 +142,22 @@ public class ClassSearchPage extends AbstractPage {
             DomElement resultsContainer = findOnPage(SEARCH_RESULTS_CONTAINER_FINDER);
             searchResultsView = new SearchResultsView(resultsContainer);
             return searchResultsView.getSearchResultsClassText();
+        } catch (TimeoutException e) {
+            fail("Could not find search results container");
+            return null;
+        }
+    }
+
+    /**
+     * This method returns the course levels of the courses in the search results
+     * 
+     * @return A list of integers, each representing a course level of a search result
+     */
+    public List<Integer> findResultCourseLevels() {
+        try {
+            DomElement resultsContainer = findOnPage(SEARCH_RESULTS_CONTAINER_FINDER);
+            searchResultsView = new SearchResultsView(resultsContainer);
+            return searchResultsView.getResultCourseLevels();
         } catch (TimeoutException e) {
             fail("Could not find search results container");
             return null;
