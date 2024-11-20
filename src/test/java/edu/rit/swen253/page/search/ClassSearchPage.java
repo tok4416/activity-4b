@@ -19,6 +19,7 @@ public class ClassSearchPage extends AbstractPage {
     private static final By ADVANCED_SEARCH_BUTTON_FINDER = By.className("classSearchAdvancedSearchText"); 
     private static final By ADVANCED_SEARCH_DIALOG_FINDER = By.className("mat-dialog-container");
     private static final By SEARCH_RESULTS_CONTAINER_FINDER = By.className("classSearchBasicResultsMargin");
+    private static final By NO_SEARCH_RESULTS_TEXT_FINDER = By.className("classSearchNoResultsText");
 
     private DomElement searchbar;
     private AdvancedSearchView advancedSearchDialog;
@@ -160,6 +161,21 @@ public class ClassSearchPage extends AbstractPage {
             return searchResultsView.getResultCourseLevels();
         } catch (TimeoutException e) {
             fail("Could not find search results container");
+            return null;
+        }
+    }
+
+    /**
+     * This method attempts to find the element that displays when no search results can be found and returns its text
+     * 
+     * @return The text in the element that appears when no search results can be found
+     */
+    public String findNoResultsText() {
+        try {
+            DomElement noResultsElement = findOnPage(NO_SEARCH_RESULTS_TEXT_FINDER); // this directly finds the span element with the text saying no results were found, if present on the page
+            return noResultsElement.getText();
+        } catch (TimeoutException e) {
+            fail("Could not find 'no results' element");
             return null;
         }
     }
