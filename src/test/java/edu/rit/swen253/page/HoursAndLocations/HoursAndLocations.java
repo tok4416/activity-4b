@@ -129,15 +129,6 @@ public class HoursAndLocations extends TigerCenterHomePage{
         return hoursInfo.getText();
 
     }
-
-    // // Helper method to get hours from a container
-    // private String getHoursFromContainer(String containerCssSelector) {
-    //     WebDriverWait wait = new WebDriverWait(web_driver, Duration.ofSeconds(10));  // 10-second timeout for each wait
-    //     WebElement hoursElement = wait.until(
-    //         ExpectedConditions.visibilityOfElementLocated(By.cssSelector(containerCssSelector))
-    //     );
-    //     return hoursElement.getText();
-    // }
     
   private enum NavButton {
     CLASS_SEARCH("Class Search"),
