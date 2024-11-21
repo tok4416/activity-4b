@@ -9,6 +9,7 @@ import org.openqa.selenium.TimeoutException;
 
 import edu.rit.swen253.page.AbstractPage;
 import edu.rit.swen253.utils.DomElement;
+import edu.rit.swen253.utils.HtmlUtils;
 
 public class ClassSearchPage extends AbstractPage {
     
@@ -21,10 +22,12 @@ public class ClassSearchPage extends AbstractPage {
     private static final By SEARCH_RESULTS_CONTAINER_FINDER = By.className("classSearchBasicResultsMargin");
     private static final By NO_SEARCH_RESULTS_TEXT_FINDER = By.className("classSearchNoResultsText");
     private static final By COURSE_DESCRIPTION_CONTAINER_FINDER = By.id("classDescContainer");
+    private static final By COURSE_CATALOG_BUTTON_FINDER = By.className("classSearchCourseCatalogText");
 
     private DomElement searchbar;
     private AdvancedSearchView advancedSearchDialog;
     private SearchResultsView searchResultsView;
+    private CourseCatalogView catalogView;
 
     public ClassSearchPage() {
         super();
@@ -145,7 +148,7 @@ public class ClassSearchPage extends AbstractPage {
         searchResultsView.openTopResult();
         try {
             DomElement descriptionContainer = findOnPage(COURSE_DESCRIPTION_CONTAINER_FINDER);
-            DomElement descriptionContent = descriptionContainer.findChildBy(By.tagName("p")); // the element with the needed text is a <p> tag
+            DomElement descriptionContent = descriptionContainer.findChildBy(HtmlUtils.PARAGRAPH_FINDER); // the element with the needed text is a <p> tag
             return descriptionContent.getText();
         } catch (TimeoutException e) {
             fail("Could not find course description text");
@@ -198,5 +201,32 @@ public class ClassSearchPage extends AbstractPage {
             fail("Could not find 'no results' element");
             return null;
         }
+    }
+
+    /**
+     * This method clicks the course catalog link and automatically initializes a view object for the catalog
+     */
+    public void clickCourseCatalogLink() {
+        try {
+            DomElement courseCatalogLink = findOnPage(COURSE_CATALOG_BUTTON_FINDER);
+            courseCatalogLink.click();
+            DomElement catalogDialog = findOnPage(By.tagName("course-catalog-dialog")); // this appears to be a unique tag to the tigercenter page
+            catalogView = new CourseCatalogView(catalogDialog); // automatically initializing the catalogview
+        } catch (TimeoutException e) {
+            fail("Could not open course catalog dialog");
+        }
+    }
+
+    /**
+     * This method opens the specified college dropdown element
+     * 
+     * @param optionNumber The number of the dropdown being opened
+     */
+    public void openCollegeOption(int optionNumber) {
+        catalogView.openCollegeOption(optionNumber);
+    }
+
+    public List<String> getCollegeSubjects(int collegeNumber) {
+        return catalogView.getCollegeSubjects(collegeNumber);
     }
 }

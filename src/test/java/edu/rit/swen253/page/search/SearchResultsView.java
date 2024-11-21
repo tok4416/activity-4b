@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 
 import edu.rit.swen253.utils.DomElement;
+import edu.rit.swen253.utils.HtmlUtils;
 
 public class SearchResultsView {
     
@@ -49,7 +50,7 @@ public class SearchResultsView {
                 DomElement classTextDivContainer = columnHeader.findChildBy(By.className("col-xs-2"));
                 DomElement classTextElement = classTextDivContainer.findChildBy(By.className("classSearchBasicResultsText"));
                 String result = "";
-                for (DomElement textHolder : classTextElement.findChildrenBy(By.tagName("span"))) {
+                for (DomElement textHolder : classTextElement.findChildrenBy(HtmlUtils.SPAN_FINDER)) {
                     result += textHolder.getText() + "\n";
                 }
                 resultsClassText.add(result);
@@ -92,14 +93,6 @@ public class SearchResultsView {
     public void openTopResult() {
         DomElement topResult = results.get(0);
         topResult.click(); // opening the result so we can view its contents
-        /*try {
-            /*DomElement resultChildDiv = topResult.findChildBy(By.className("classSearchBasicResultsDecorator"));
-            DomElement extraInformationDiv = resultChildDiv.findChildBy(By.className("w3-animate-top"));
-            DomElement informationChildDiv = extraInformationDiv.findChildBy(By.className("ng-star-inserted"));
-            DomElement descriptionContainerDiv;
-        } catch (TimeoutException e) {
-            fail("Could not find container elements");
-        }*/
     }
 
 }
