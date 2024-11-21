@@ -70,7 +70,7 @@ public class SearchResultsView {
     public List<Integer> getResultCourseLevels() {
         List<Integer> courseResultLevels = new LinkedList<>();
         List<String> courseTexts = getSearchResultsClassText();
-        Pattern courseCodeFinder = Pattern.compile("SWEN \\d{2,3}"); // course level values are of the form "SWEN ###" (SWEN 99 has 2 numbers, hence \\d{2,3})
+        Pattern courseCodeFinder = Pattern.compile("[A-Z]{3,4} \\d{2,3}"); // course level values are of the form "SWEN ###" (some courses, such as SWEN 99, have 2 numbers, hence \\d{2,3})
         for (String courseText : courseTexts) {
             Matcher levelMatcher = courseCodeFinder.matcher(courseText);
             levelMatcher.find();
@@ -84,6 +84,22 @@ public class SearchResultsView {
             courseResultLevels.add(courseLevel);
         }
         return courseResultLevels;
+    }
+
+    /**
+     * This method is used to open the top result so we can extract information from it
+     */
+    public void openTopResult() {
+        DomElement topResult = results.get(0);
+        topResult.click(); // opening the result so we can view its contents
+        /*try {
+            /*DomElement resultChildDiv = topResult.findChildBy(By.className("classSearchBasicResultsDecorator"));
+            DomElement extraInformationDiv = resultChildDiv.findChildBy(By.className("w3-animate-top"));
+            DomElement informationChildDiv = extraInformationDiv.findChildBy(By.className("ng-star-inserted"));
+            DomElement descriptionContainerDiv;
+        } catch (TimeoutException e) {
+            fail("Could not find container elements");
+        }*/
     }
 
 }

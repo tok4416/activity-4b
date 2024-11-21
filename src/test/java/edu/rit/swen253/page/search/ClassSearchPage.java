@@ -20,6 +20,7 @@ public class ClassSearchPage extends AbstractPage {
     private static final By ADVANCED_SEARCH_DIALOG_FINDER = By.className("mat-dialog-container");
     private static final By SEARCH_RESULTS_CONTAINER_FINDER = By.className("classSearchBasicResultsMargin");
     private static final By NO_SEARCH_RESULTS_TEXT_FINDER = By.className("classSearchNoResultsText");
+    private static final By COURSE_DESCRIPTION_CONTAINER_FINDER = By.id("classDescContainer");
 
     private DomElement searchbar;
     private AdvancedSearchView advancedSearchDialog;
@@ -130,6 +131,25 @@ public class ClassSearchPage extends AbstractPage {
             submitSearchButton.click();
         } catch (TimeoutException e) {
             fail("Could not find search submission button");
+        }
+    }
+
+    public String getTopResultDescription() {
+        try {
+            DomElement resultsContainer = findOnPage(SEARCH_RESULTS_CONTAINER_FINDER);
+            searchResultsView = new SearchResultsView(resultsContainer);
+        } catch (TimeoutException e) {
+            fail("Could not find search results container");
+            return null; // immediately break, we cannot find more information about search results if the container can't be found
+        }
+        searchResultsView.openTopResult();
+        try {
+            DomElement descriptionContainer = findOnPage(COURSE_DESCRIPTION_CONTAINER_FINDER);
+            DomElement descriptionContent = descriptionContainer.findChildBy(By.tagName("p")); // the element with the needed text is a <p> tag
+            return descriptionContent.getText();
+        } catch (TimeoutException e) {
+            fail("Could not find course description text");
+            return null;
         }
     }
 
