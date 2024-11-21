@@ -6,6 +6,7 @@ import edu.rit.swen253.utils.BrowserWindow;
 import edu.rit.swen253.utils.SeleniumUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
@@ -21,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
+
 @TestInstance(Lifecycle.PER_CLASS)
 public abstract class AbstractWebTest {
 
