@@ -1,4 +1,4 @@
-package edu.rit.swen253.page.HoursAndLocationsTest;
+package edu.rit.swen253.test.HoursAndLocationsTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
