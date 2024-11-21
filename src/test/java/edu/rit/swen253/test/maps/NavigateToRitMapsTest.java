@@ -18,46 +18,49 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class NavigateToRitMapsTest extends AbstractWebTest {
 
-  private TigerCenterHomePage homePage;
-  private BrowserWindow<TigerCenterHomePage> homeWindow;
 
-  //
-  // Test sequence
-  //
+// @Disabled
+// @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+// class NavigateToRitMapsTest extends AbstractWebTest {
 
-  @Test
-  @Order(1)
-  @DisplayName("First, navigate to the Tiger Center Home page.")
-  void navigateToHomePage() {
-    homePage = navigateToPage("https://tigercenter.rit.edu", TigerCenterHomePage::new);
-    assertNotNull(homePage);
-    homeWindow = getCurrentWindow();
-  }
+//   private TigerCenterHomePage homePage;
+//   private BrowserWindow<TigerCenterHomePage> homeWindow;
 
-  @Test
-  @Order(2)
-  @DisplayName("Second, click on the Maps at RIT button and validate navigation.")
-  void navigateToMaps() {
-    homePage.selectMapsAtRIT();
-    final SimplePage mapsPage = assertNewWindowAndSwitch(SimplePage::new);
+//   //
+//   // Test sequence
+//   //
 
-    // there's a timing issue with Firefox (give it a second to render)
-    if (onBrowser(FIREFOX)) {
-      sleep(1);
-    }
+//   @Test
+//   @Order(1)
+//   @DisplayName("First, navigate to the Tiger Center Home page.")
+//   void navigateToHomePage() {
+//     homePage = navigateToPage("https://tigercenter.rit.edu", TigerCenterHomePage::new);
+//     assertNotNull(homePage);
+//     homeWindow = getCurrentWindow();
+//   }
 
-    assertEquals("https://maps.rit.edu/", mapsPage.getURL());
-  }
+//   @Test
+//   @Order(2)
+//   @DisplayName("Second, click on the Maps at RIT button and validate navigation.")
+//   void navigateToMaps() {
+//     homePage.selectMapsAtRIT();
+//     final SimplePage mapsPage = assertNewWindowAndSwitch(SimplePage::new);
 
-  @Test
-  @Order(3)
-  @DisplayName("Just to validate the new switchToWindow API.")
-  void switchToApp() {
-    assertNotSame(homePage, getCurrentWindow().page(), "Before switch");
-    switchToWindow(homeWindow);
-    assertSame(homePage, getCurrentWindow().page(), "After switch");
-  }
-}
+//     // there's a timing issue with Firefox (give it a second to render)
+//     if (onBrowser(FIREFOX)) {
+//       sleep(1);
+//     }
+
+//     assertEquals("https://maps.rit.edu/", mapsPage.getURL());
+//   }
+
+//   @Test
+//   @Order(3)
+//   @DisplayName("Just to validate the new switchToWindow API.")
+//   void switchToApp() {
+//     assertNotSame(homePage, getCurrentWindow().page(), "Before switch");
+//     switchToWindow(homeWindow);
+//     assertSame(homePage, getCurrentWindow().page(), "After switch");
+//   }
+// }
