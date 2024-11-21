@@ -41,6 +41,11 @@ public class TigerCenterHomePage extends AbstractAngularPage {
     findButtonLink(NavButton.CLASS_SEARCH).click();
   }
 
+
+  public void selectGPA() {
+    findButtonLink(NavButton.GPA_CALCULATOR).click();
+  }
+
   //
   // Private
   //
