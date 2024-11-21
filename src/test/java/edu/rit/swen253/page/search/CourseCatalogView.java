@@ -11,6 +11,7 @@ import org.openqa.selenium.TimeoutException;
 
 import edu.rit.swen253.utils.DomElement;
 import edu.rit.swen253.utils.HtmlUtils;
+import edu.rit.swen253.utils.TimingUtils;
 
 public class CourseCatalogView {
     
