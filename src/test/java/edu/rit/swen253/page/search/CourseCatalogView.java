@@ -38,6 +38,53 @@ public class CourseCatalogView {
         targetCollege.click();
     }
 
+    /**
+     * This method opens the specified subject in the specified college
+     * 
+     * @param collegeNumber The position in the list of dropdowns in the course catalog that the target college appears
+     * @param subjectNumber The position in the list of dropdowns within the selected college that the target subject appears
+     */
+    public void openSubjectOption(int collegeNumber, int courseNumber) {
+        DomElement targetSubject = getCollegeSubjectDropdowns(collegeNumber).get(courseNumber);
+        targetSubject.click();
+    }
+
+    /**
+     * This method gets the course information about the specified course in the specified subject in the specified college
+     * 
+     * @param collegeNumber The position in the list of dropdowns in the course catalog that the target college appears
+     * @param subjectNumber The position in the list of dropdowns within the selected college that the target subject appears
+     * @param courseNumber The position in the list of dropdowns within the selected subject that the target course appears
+     * @return A string containing the target course description
+     */
+    public String getCourseInformation(int collegeNumber, int subjectNumber, int courseNumber) {
+        DomElement targetSubject = getCollegeSubjectDropdowns(collegeNumber).get(subjectNumber);
+        try {
+            DomElement subjectChildDiv = targetSubject.findChildBy(HtmlUtils.DIV_FINDER);
+            DomElement intermediateDiv = subjectChildDiv.findChildBy(HtmlUtils.DIV_FINDER);
+            List<DomElement> courseDivs = intermediateDiv.findChildrenBy(By.className("courseCatalogCourseResultsDecorator"));
+            DomElement targetDiv = courseDivs.get(courseNumber);
+            targetDiv.click();
+            DomElement targetChild = targetDiv.findChildBy(HtmlUtils.DIV_FINDER);
+            DomElement detailsContainer = targetChild.findChildBy(By.className("courseCatalogExpandedDetailsDiv"));
+            DomElement containerChild = detailsContainer.findChildBy(HtmlUtils.DIV_FINDER);
+            DomElement descriptionContainer = containerChild.findChildBy(By.className("col-sm-8"));
+            DomElement descriptionRoot = descriptionContainer.findChildBy(HtmlUtils.DIV_FINDER);
+            DomElement descriptionParagraph = descriptionRoot.findChildBy(By.className("courseCatalogExpandedDetailsBodyText"));
+            return descriptionParagraph.getText();
+        } catch (TimeoutException e) {
+            fail("Could not extract course information for subject " + subjectNumber + " and course " + courseNumber);
+            return null;
+        }
+        
+    }
+
+    /**
+     * This method gets the subjects of the specified college
+     * 
+     * @param collegeNumber The position in the list of dropdowns in the course catalog that the college appears
+     * @return A list of strings, each containing a subject's course code and subject title
+     */
     public List<String> getCollegeSubjects(int collegeNumber) {
         List<DomElement> subjectDropdownElements = getCollegeSubjectDropdowns(collegeNumber);
         List<String> subjectTexts = new LinkedList<>();
@@ -58,6 +105,12 @@ public class CourseCatalogView {
         return subjectTexts;
     }
 
+    /**
+     * This method gets the elements that contain a college's subject dropdowns
+     * 
+     * @param collegeNumber The position in the list of dropdowns in the course catalog that the target college appears
+     * @return A list of DomElements, each containing a subject dropdown within the target college
+     */
     private List<DomElement> getCollegeSubjectDropdowns(int collegeNumber) {
         DomElement targetCollege = getCollegeOption(collegeNumber);
         try {

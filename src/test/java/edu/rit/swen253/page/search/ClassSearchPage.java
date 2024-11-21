@@ -226,7 +226,35 @@ public class ClassSearchPage extends AbstractPage {
         catalogView.openCollegeOption(optionNumber);
     }
 
+    /**
+     * This method gets the subjects of the specified college
+     * 
+     * @param collegeNumber The position in the list of dropdowns in the course catalog that the college appears
+     * @return A list of strings, each containing a subject's course code and subject title
+     */
     public List<String> getCollegeSubjects(int collegeNumber) {
         return catalogView.getCollegeSubjects(collegeNumber);
+    }
+
+    /**
+     * This method opens the specified subject in the specified college
+     * 
+     * @param collegeNumber The position in the list of dropdowns in the course catalog that the target college appears
+     * @param subjectNumber The position in the list of dropdowns within the selected college that the target subject appears
+     */
+    public void openSubjectOption(int collegeNumber, int subjectNumber) {
+        catalogView.openSubjectOption(collegeNumber, subjectNumber);
+    }
+
+    /**
+     * This method gets the course information about the specified course in the specified subject in the specified college
+     * 
+     * @param collegeNumber The position in the list of dropdowns in the course catalog that the target college appears
+     * @param subjectNumber The position in the list of dropdowns within the selected college that the target subject appears
+     * @param courseNumber The position in the list of dropdowns within the selected subject that the target course appears
+     * @return A string containing the target course description
+     */
+    public String getCourseInformation(int collegeNumber, int subjectNumber, int courseNumber) {
+        return catalogView.getCourseInformation(collegeNumber, subjectNumber, courseNumber);
     }
 }
