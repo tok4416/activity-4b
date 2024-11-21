@@ -129,8 +129,6 @@ public class HoursAndLocations extends TigerCenterHomePage{
         return hoursInfo.getText();
 
     }
-
-
     
   private enum NavButton {
     CLASS_SEARCH("Class Search"),

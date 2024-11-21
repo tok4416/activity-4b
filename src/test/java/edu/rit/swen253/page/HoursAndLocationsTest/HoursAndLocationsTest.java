@@ -76,6 +76,7 @@ public class HoursAndLocationsTest extends AbstractWebTest {
 
         assertFalse(locationHours.isEmpty());
     } 
+    
 
 
     /*
