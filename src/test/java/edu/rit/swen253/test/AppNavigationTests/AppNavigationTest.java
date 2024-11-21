@@ -35,7 +35,9 @@ public class AppNavigationTest extends AbstractWebTest{
     public void setUp() {
         // Give time for response due to website loading (based on internet connection) or else test fails
         SeleniumUtils.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60)); 
-        tigercenter = navigateToPage("https://tigercenter.rit.edu", AppNavigation::new);
+
+        SeleniumUtils.getDriver().get("https://tigercenter.rit.edu");
+        // tigercenter = navigateToPage("https://tigercenter.rit.edu", AppNavigation::new);
 
         // Handle new windows being created when selected on certain links
         // that generate new windows
@@ -50,6 +52,8 @@ public class AppNavigationTest extends AbstractWebTest{
 
         SeleniumUtils.getDriver().switchTo().window(mainWindowHandler);
 
+        tigercenter = new AppNavigation();
+
         WebDriverWait wait = new WebDriverWait(SeleniumUtils.getDriver(), Duration.ofSeconds(20));
         wait.until(driver -> SeleniumUtils.getWindowHandles().size() == 1);
     }
@@ -62,6 +66,16 @@ public class AppNavigationTest extends AbstractWebTest{
         // Give time for response due to website loading (based on internet connection) or else test fails
         SeleniumUtils.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60)); 
         tigercenter.selectClassSearch();
+
+        Set<String> extraWindowHandler = SeleniumUtils.getWindowHandles();
+        String mainWindowHandler = SeleniumUtils.getDriver().getWindowHandle();
+        extraWindowHandler.stream()
+            .filter(handle -> !handle.equals(mainWindowHandler))
+            .forEach(handle -> {
+                SeleniumUtils.getDriver().switchTo().window(handle).close();
+        });
+
+    SeleniumUtils.getDriver().switchTo().window(mainWindowHandler);
     }
 
      /**
@@ -102,7 +116,7 @@ public class AppNavigationTest extends AbstractWebTest{
      * Select Maps at RIT Page Test
      */
     @Test
-    @Order(4)
+    @Order(3)
     public void selectMapAtRITTest(){
         // Give time for response due to website loading (based on internet connection) or else test fails
         SeleniumUtils.getDriver().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60)); 
@@ -124,26 +138,26 @@ public class AppNavigationTest extends AbstractWebTest{
     }
 
     @Test
-    @Order(5)
+    @Order(4)
     public void clickFeedbackTest(){
         tigercenter.clickTopRightLinks("https://help.rit.edu/sp?id=sc_cat_item&sys_id=36a3646ddbb60c50881c89584b9619f5");
     }
 
 
     @Test
-    @Order(6)
+    @Order(5)
     public void clickSupportTest(){
         tigercenter.clickTopRightLinks("https://help.rit.edu/sp?id=sc_cat_item&sys_id=9b613be5dbf24c50881c89584b961986");
     }
 
     @Test
-    @Order(7)
+    @Order(6)
     public void clickDirectoriesTest(){
         tigercenter.clickTopRightLinks("https://www.rit.edu/directory");
     }
 
     @Test
-    @Order(8)
+    @Order(7)
     public void clickRitHomepageTest(){
         tigercenter.clickTopRightLinks("https://www.rit.edu");
 
@@ -159,6 +173,24 @@ public class AppNavigationTest extends AbstractWebTest{
             });
 
         SeleniumUtils.getDriver().switchTo().window(mainWindowHandler);
+    }
+
+    @Test
+    @Order(8)
+    public void testHoursAndLocationsLeftBar(){
+        tigercenter.HoursAndLocationsLeftBar();
+    }
+
+    @Test
+    @Order(9)
+    public void testClassSearchLeftBar(){
+        tigercenter.classSearchLeftBar();
+    }
+
+    @Test
+    @Order(10)
+    public void testGPACalculatorLeftBar(){
+        tigercenter.GpaCalculatorLeftBar();
     }
 
 }

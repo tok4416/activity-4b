@@ -99,8 +99,9 @@ public class AppNavigation extends TigerCenterHomePage{
     Actions actions = new Actions(SeleniumUtils.getDriver());
     actions.moveToElement(feedbackLink).click().perform();
 
-    // If a link opens a new window handle it 
-    
+    // If a link opens a new window handle it because
+    // Selenium does not like having more than 1 window
+
     Set<String> windowHandles = SeleniumUtils.getDriver().getWindowHandles();
     if (windowHandles.size() > 1) {
         String mainWindow = SeleniumUtils.getDriver().getWindowHandle();
@@ -113,8 +114,23 @@ public class AppNavigation extends TigerCenterHomePage{
     }
   }
 
+  public void HoursAndLocationsLeftBar(){
+    findButtonLink(NavButton.HOURS_AND_LOCATIONS).click();
+    WebElement LeftBarhoursButton = SeleniumUtils.getDriver().findElement(By.linkText("Hours & Locations"));
+    LeftBarhoursButton.click();
+  }
 
-  
+  public void classSearchLeftBar(){
+    findButtonLink(NavButton.CLASS_SEARCH).click();
+    WebElement classSearchButton = SeleniumUtils.getDriver().findElement(By.linkText("Class Search"));
+    classSearchButton.click();
+  }
+
+  public void GpaCalculatorLeftBar() {
+    findButtonLink(NavButton.GPA_CALCULATOR).click();
+    WebElement gpaCalculatorButton = SeleniumUtils.getDriver().findElement(By.linkText("GPA Calculator"));
+    gpaCalculatorButton.click();
+  }
   
 
   private enum NavButton {
