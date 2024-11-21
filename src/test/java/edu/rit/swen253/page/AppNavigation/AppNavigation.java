@@ -28,7 +28,10 @@ public class AppNavigation extends TigerCenterHomePage{
         super();
     }
 
-    public void goToTigerCenterHompage(){
+     /*
+     * Go to tiger homepage
+     */
+    public void goToTigerCenterHomepage(){
         SeleniumUtils.getDriver().get("https://tigercenter.rit.edu");
     }
 
@@ -89,6 +92,9 @@ public class AppNavigation extends TigerCenterHomePage{
     findButtonLink(NavButton.CLASS_SEARCH).click();
   }
 
+   /*
+     * Click top right links in top right of page
+     */
   public void clickTopRightLinks(String topRightLink) {
     WebDriverWait wait = new WebDriverWait(SeleniumUtils.getDriver(), Duration.ofSeconds(20));
     WebElement feedbackLink = wait.until(ExpectedConditions.elementToBeClickable(
@@ -114,18 +120,27 @@ public class AppNavigation extends TigerCenterHomePage{
     }
   }
 
+   /*
+     * Hours and Locations access from left Bar
+     */
   public void HoursAndLocationsLeftBar(){
     findButtonLink(NavButton.HOURS_AND_LOCATIONS).click();
     WebElement LeftBarhoursButton = SeleniumUtils.getDriver().findElement(By.linkText("Hours & Locations"));
     LeftBarhoursButton.click();
   }
 
+  /*
+     * Class Search access from left Bar
+     */
   public void classSearchLeftBar(){
     findButtonLink(NavButton.CLASS_SEARCH).click();
     WebElement classSearchButton = SeleniumUtils.getDriver().findElement(By.linkText("Class Search"));
     classSearchButton.click();
   }
 
+   /*
+     * GpaCalculator access from left Bar
+     */
   public void GpaCalculatorLeftBar() {
     findButtonLink(NavButton.GPA_CALCULATOR).click();
     WebElement gpaCalculatorButton = SeleniumUtils.getDriver().findElement(By.linkText("GPA Calculator"));
